@@ -4,6 +4,7 @@ A lightweight CLI weather utility that shows current weather conditions in your 
 
 ![](https://img.shields.io/badge/Go-1.21+-00ADD8?style=flat&logo=go)
 ![](https://img.shields.io/badge/license-MIT-blue)
+![](https://img.shields.io/badge/Made%20with-Claude-CD6799?style=flat&logo=anthropic)
 
 ## Features
 
@@ -19,18 +20,6 @@ A lightweight CLI weather utility that shows current weather conditions in your 
 ### From pre-built binaries
 
 Download the latest release from the [Releases](https://github.com/kakkoiirus/sky-cli/releases) page.
-
-**macOS/Linux:**
-```bash
-# Download and make executable
-chmod +x sky
-
-# Move to PATH
-sudo mv sky /usr/local/bin/
-```
-
-**Windows:**
-Rename `sky.exe` and add to your PATH.
 
 ### From source
 
