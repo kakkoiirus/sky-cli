@@ -5,6 +5,7 @@ A lightweight CLI weather utility that shows current weather conditions in your 
 ![](https://img.shields.io/badge/Go-1.21+-00ADD8?style=flat&logo=go)
 ![](https://img.shields.io/badge/license-MIT-blue)
 ![](https://img.shields.io/badge/Made%20with-Claude-CD6799?style=flat&logo=anthropic)
+![](https://img.shields.io/badge/Model-GLM--4.7-3493B4?style=flat)
 
 ## Features
 
