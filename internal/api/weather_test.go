@@ -133,12 +133,10 @@ func TestGetWeather_Success(t *testing.T) {
 			Current: struct {
 				Temperature     float64 `json:"temperature_2m"`
 				ApparentTemp    float64 `json:"apparent_temperature"`
-				WindSpeed       float64 `json:"windspeed_10m"`
 				WeatherCode     int     `json:"weather_code"`
 			}{
 				Temperature:  15.5,
 				ApparentTemp: 14.2,
-				WindSpeed:    10.5,
 				WeatherCode:  0,
 			},
 		}
@@ -153,14 +151,13 @@ func TestGetWeather_Success(t *testing.T) {
 	// For this test, we'll test the JSON unmarshaling logic separately
 
 	// Test JSON unmarshaling
-	responseJSON := `{"current":{"temperature_2m":15.5,"apparent_temperature":14.2,"windspeed_10m":10.5,"weather_code":0}}`
+	responseJSON := `{"current":{"temperature_2m":15.5,"apparent_temperature":14.2,"weather_code":0}}`
 	var weatherResp WeatherResponse
 	err := json.Unmarshal([]byte(responseJSON), &weatherResp)
 	require.NoError(t, err)
 
 	assert.Equal(t, 15.5, weatherResp.Current.Temperature)
 	assert.Equal(t, 14.2, weatherResp.Current.ApparentTemp)
-	assert.Equal(t, 10.5, weatherResp.Current.WindSpeed)
 	assert.Equal(t, 0, weatherResp.Current.WeatherCode)
 }
 
@@ -174,14 +171,14 @@ func TestWeatherResponse_Unmarshal(t *testing.T) {
 	}{
 		{
 			name: "Valid response",
-			json: `{"current":{"temperature_2m":20.0,"apparent_temperature":19.0,"windspeed_10m":5.0,"weather_code":1}}`,
+			json: `{"current":{"temperature_2m":20.0,"apparent_temperature":19.0,"weather_code":1}}`,
 			wantTemp: 20.0,
 			wantCode: 1,
 			wantError: false,
 		},
 		{
 			name: "Negative temperature",
-			json: `{"current":{"temperature_2m":-15.3,"apparent_temperature":-22.1,"windspeed_10m":5.0,"weather_code":65}}`,
+			json: `{"current":{"temperature_2m":-15.3,"apparent_temperature":-22.1,"weather_code":65}}`,
 			wantTemp: -15.3,
 			wantCode: 65,
 			wantError: false,
@@ -220,14 +217,12 @@ func TestWeather_Struct(t *testing.T) {
 	weather := &Weather{
 		Temperature:     25.5,
 		ApparentTemp:    27.0,
-		WindSpeed:       12.3,
 		WeatherCode:     2,
 		WeatherCodeDesc: "Partly cloudy",
 	}
 
 	assert.Equal(t, 25.5, weather.Temperature)
 	assert.Equal(t, 27.0, weather.ApparentTemp)
-	assert.Equal(t, 12.3, weather.WindSpeed)
 	assert.Equal(t, 2, weather.WeatherCode)
 	assert.Equal(t, "Partly cloudy", weather.WeatherCodeDesc)
 }

@@ -13,7 +13,6 @@ type WeatherResponse struct {
 	Current struct {
 		Temperature     float64 `json:"temperature_2m"`
 		ApparentTemp    float64 `json:"apparent_temperature"`
-		WindSpeed       float64 `json:"windspeed_10m"`
 		WeatherCode     int     `json:"weather_code"`
 	} `json:"current"`
 }
@@ -22,7 +21,6 @@ type WeatherResponse struct {
 type Weather struct {
 	Temperature     float64
 	ApparentTemp    float64
-	WindSpeed       float64
 	WeatherCode     int
 	WeatherCodeDesc string
 }
@@ -100,7 +98,7 @@ func WeatherCodeEmoji(code int) string {
 
 // GetWeather retrieves current weather for a given location
 func GetWeather(ctx context.Context, lat, lon float64) (*Weather, error) {
-	apiURL := fmt.Sprintf("https://api.open-meteo.com/v1/forecast?latitude=%.4f&longitude=%.4f&current=temperature_2m,apparent_temperature,windspeed_10m,weather_code&temperature_unit=celsius&windspeed_unit=kmh&timezone=auto", lat, lon)
+	apiURL := fmt.Sprintf("https://api.open-meteo.com/v1/forecast?latitude=%.4f&longitude=%.4f&current=temperature_2m,apparent_temperature,weather_code&temperature_unit=celsius&timezone=auto", lat, lon)
 
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, apiURL, nil)
 	if err != nil {
@@ -130,7 +128,6 @@ func GetWeather(ctx context.Context, lat, lon float64) (*Weather, error) {
 	return &Weather{
 		Temperature:     weatherResp.Current.Temperature,
 		ApparentTemp:    weatherResp.Current.ApparentTemp,
-		WindSpeed:       weatherResp.Current.WindSpeed,
 		WeatherCode:     weatherResp.Current.WeatherCode,
 		WeatherCodeDesc: WeatherCodeDescription(weatherResp.Current.WeatherCode),
 	}, nil

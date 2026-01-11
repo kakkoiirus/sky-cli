@@ -19,7 +19,6 @@ func TestFormatWeather_Typical(t *testing.T) {
 	weather := &api.Weather{
 		Temperature:     15.5,
 		ApparentTemp:    14.2,
-		WindSpeed:       10.5,
 		WeatherCode:     0,
 		WeatherCodeDesc: "Clear",
 	}
@@ -43,7 +42,6 @@ func TestFormatWeather_NegativeTemperature(t *testing.T) {
 	weather := &api.Weather{
 		Temperature:     -15.3,
 		ApparentTemp:    -22.1,
-		WindSpeed:       5.0,
 		WeatherCode:     65,
 		WeatherCodeDesc: "Heavy rain",
 	}
@@ -66,7 +64,6 @@ func TestFormatWeather_VeryLongCityName(t *testing.T) {
 	weather := &api.Weather{
 		Temperature:     10.0,
 		ApparentTemp:    9.0,
-		WindSpeed:       15.0,
 		WeatherCode:     3,
 		WeatherCodeDesc: "Overcast",
 	}
@@ -88,7 +85,6 @@ func TestFormatWeather_SpecialCharacters(t *testing.T) {
 	weather := &api.Weather{
 		Temperature:     5.5,
 		ApparentTemp:    2.1,
-		WindSpeed:       8.3,
 		WeatherCode:     61,
 		WeatherCodeDesc: "Slight rain",
 	}
@@ -124,7 +120,6 @@ func TestFormatWeather_DifferentWeatherCodes(t *testing.T) {
 			weather := &api.Weather{
 				Temperature:     20.0,
 				ApparentTemp:    19.0,
-				WindSpeed:       5.0,
 				WeatherCode:     tt.weatherCode,
 				WeatherCodeDesc: tt.description,
 			}
