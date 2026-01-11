@@ -1,6 +1,7 @@
 package api
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -98,10 +99,15 @@ func WeatherCodeEmoji(code int) string {
 }
 
 // GetWeather retrieves current weather for a given location
-func GetWeather(lat, lon float64) (*Weather, error) {
+func GetWeather(ctx context.Context, lat, lon float64) (*Weather, error) {
 	apiURL := fmt.Sprintf("https://api.open-meteo.com/v1/forecast?latitude=%.4f&longitude=%.4f&current=temperature_2m,apparent_temperature,windspeed_10m,weather_code&temperature_unit=celsius&windspeed_unit=kmh&timezone=auto", lat, lon)
 
-	resp, err := http.Get(apiURL)
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, apiURL, nil)
+	if err != nil {
+		return nil, fmt.Errorf("failed to create request: %w", err)
+	}
+
+	resp, err := DefaultClient.Do(req)
 	if err != nil {
 		return nil, fmt.Errorf("failed to fetch weather: %w", err)
 	}

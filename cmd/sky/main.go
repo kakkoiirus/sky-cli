@@ -2,9 +2,11 @@ package main
 
 import (
 	"bufio"
+	"context"
 	"fmt"
 	"os"
 	"strings"
+	"time"
 
 	"github.com/kakkoiirus/sky-cli/internal/api"
 	"github.com/kakkoiirus/sky-cli/internal/ui"
@@ -36,8 +38,12 @@ func main() {
 		return
 	}
 
+	// Create context with timeout for API calls
+	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
+	defer cancel()
+
 	// Get location
-	location, err := api.GetLocation(cityName)
+	location, err := api.GetLocation(ctx, cityName)
 	if err != nil {
 		fmt.Fprintln(os.Stderr, ui.FormatError(err))
 		os.Exit(1)
@@ -45,7 +51,7 @@ func main() {
 	}
 
 	// Get weather
-	weather, err := api.GetWeather(location.Latitude, location.Longitude)
+	weather, err := api.GetWeather(ctx, location.Latitude, location.Longitude)
 	if err != nil {
 		fmt.Fprintln(os.Stderr, ui.FormatError(err))
 		os.Exit(1)

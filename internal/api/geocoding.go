@@ -1,6 +1,7 @@
 package api
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -27,11 +28,16 @@ type Location struct {
 }
 
 // GetLocation retrieves coordinates for a given city name
-func GetLocation(city string) (*Location, error) {
+func GetLocation(ctx context.Context, city string) (*Location, error) {
 	encodedCity := url.QueryEscape(city)
 	apiURL := fmt.Sprintf("https://geocoding-api.open-meteo.com/v1/search?name=%s&count=1&language=en&format=json", encodedCity)
 
-	resp, err := http.Get(apiURL)
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, apiURL, nil)
+	if err != nil {
+		return nil, fmt.Errorf("failed to create request: %w", err)
+	}
+
+	resp, err := DefaultClient.Do(req)
 	if err != nil {
 		return nil, fmt.Errorf("failed to fetch location: %w", err)
 	}
