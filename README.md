@@ -15,6 +15,7 @@ A lightweight CLI weather utility that shows current weather conditions in your 
 - Weather emoji indicators
 - Metric units (°C, km/h)
 - Single binary, no dependencies
+- Graceful timeout handling (requests cancel after 15s)
 
 ## Installation
 
@@ -69,6 +70,22 @@ Uses [Open-Meteo](https://open-meteo.com/) API:
 - Geocoding API for city lookup
 - Weather API for current conditions
 - Apparent temperature calculation
+
+## Development
+
+### Running tests
+
+```bash
+go test ./... -v
+```
+
+### Test coverage
+
+```bash
+go test ./... -cover
+go test ./... -coverprofile=coverage.out
+go tool cover -html=coverage.out
+```
 
 ## License
 
